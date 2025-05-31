@@ -6,22 +6,176 @@
     <title>Антибактериальное мыло | Мыльная фантазия</title>
     <link rel="stylesheet" href="../../style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Стили для шапки */
+        .header {
+            background: linear-gradient(135deg, #6d6875 0%, #b5838d 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-link:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            color: white;
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ffcdb2;
+        }
+
+        .cart-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .cart-link:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .cart-icon {
+            font-size: 18px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Стили для уведомлений */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #6d6875;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        .notification.show {
+            opacity: 1;
+        }
+
+        /* Мобильные стили */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background: linear-gradient(135deg, #6d6875 0%, #b5838d 100%);
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 20px;
+                gap: 25px;
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .cart-link {
+                padding: 8px 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">Мыльная фантазия</div>
-            <nav>
-                <ul>
-                    <li><a href="../../index.html">Главная</a></li>
-                    <li><a href="../all.html">Все товары</a></li>
-                    <li><a href="../../cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
-                    <li><a href="../../orders.html">Мои заказы</a></li>
-                </ul>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-container">
+            <a href="../../index.html" class="logo">
+                <span class="logo-icon">🧼</span>
+                <span>Мыльная фантазия</span>
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <a href="../index.html" class="nav-link">Главная</a>
+                <a href="all.html" class="nav-link">Каталог</a>
+                <a href="../cart.html" class="nav-link cart-link">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="../orders.html" class="nav-link">Заказы</a>
             </nav>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
     </header>
 
+    <!-- Основное содержимое -->
     <main>
         <div class="container product-detail">
             <div class="product-detail-container">
@@ -36,22 +190,22 @@
                     <h1>Антибактериальное мыло</h1>
                     <div class="price">420 ₽</div>
                     <div class="rating">
-                        ★★★★☆ <span class="reviews">(18 отзывов)</span>
+                        ★★★★★ <span class="reviews">(18 отзывов)</span>
                     </div>
                     <div class="description">
-                        <p>Мощное антибактериальное мыло с маслом чайного дерева для эффективной защиты от бактерий и вирусов.</p>
+                        <p>Мощное антибактериальное мыло с маслом чайного дерева для защиты от бактерий и очищения кожи.</p>
                         <h3>Преимущества:</h3>
                         <ul>
-                            <li>Уничтожает 99,9% бактерий</li>
-                            <li>Подходит для частого использования</li>
+                            <li>Уничтожает до 99% бактерий</li>
+                            <li>Подходит для проблемной кожи</li>
                             <li>Не сушит кожу благодаря натуральным маслам</li>
-                            <li>Идеально для общественных мест</li>
-                            <li>Натуральные антибактериальные компоненты</li>
+                            <li>Идеально для частого использования</li>
+                            <li>Натуральный антисептический состав</li>
                         </ul>
                         <h3>Состав:</h3>
-                        <p>Кокосовое масло, оливковое масло, масло чайного дерева, эвкалиптовое масло, дистиллированная вода, щелочь.</p>
+                        <p>Кокосовое масло, оливковое масло, масло чайного дерева, касторовое масло, эфирное масло эвкалипта, дистиллированная вода, щелочь.</p>
                         <h3>Рекомендации:</h3>
-                        <p>Особенно рекомендуется для использования в периоды простуд и эпидемий. Можно использовать как обычное мыло для рук.</p>
+                        <p>Используйте для ежедневного умывания, особенно после посещения общественных мест. Отлично подходит для обработки небольших ран и порезов.</p>
                     </div>
                     <button class="btn add-to-cart" data-id="2" data-name="Антибактериальное мыло" data-price="420" data-image="https://i.imgur.com/7Q5W6lF.jpg">Добавить в корзину</button>
                 </div>
@@ -60,19 +214,20 @@
             <div class="reviews-section">
                 <h2>Отзывы</h2>
                 <div class="review">
-                    <div class="review-author">Сергей, Казань</div>
+                    <div class="review-author">Дмитрий, Казань</div>
                     <div class="review-rating">★★★★★</div>
-                    <div class="review-text">Пользуюсь всей семьей - никто не болел с начала использования!</div>
+                    <div class="review-text">Отличное мыло! После него кожа чистая, но не сухая. Запах чайного дерева очень приятный.</div>
                 </div>
                 <div class="review">
-                    <div class="review-author">Ольга, Новосибирск</div>
+                    <div class="review-author">Елена, Новосибирск</div>
                     <div class="review-rating">★★★★☆</div>
-                    <div class="review-text">Хороший антибактериальный эффект, но аромат специфический.</div>
+                    <div class="review-text">Хорошо справляется со своей задачей, но запах на любителя. В целом рекомендую.</div>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Подвал -->
     <footer class="site-footer">
         <div class="container">
             <div class="footer-content">
@@ -98,21 +253,96 @@
         </div>
     </footer>
 
-    <script src="../../script.js"></script>
+    <!-- Скрипты -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const count = cart.reduce((total, item) => total + item.quantity, 0);
-            document.querySelectorAll('.cart-count').forEach(el => {
-                el.textContent = count;
-            });
+            // Мобильное меню
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
             
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    this.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                // Закрытие меню при клике на ссылку
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                        mobileMenuBtn.textContent = '☰';
+                    });
+                });
+            }
+            
+            // Обновление счетчика корзины
+            const updateCartCount = () => {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const count = cart.reduce((total, item) => total + item.quantity, 0);
+                document.querySelectorAll('.cart-count').forEach(el => {
+                    el.textContent = count;
+                });
+            };
+            updateCartCount();
+            
+            // Добавление в корзину
+            const addToCartBtn = document.querySelector('.add-to-cart');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    const productId = this.dataset.id;
+                    const productName = this.dataset.name;
+                    const productPrice = parseFloat(this.dataset.price);
+                    const productImage = this.dataset.image;
+                    
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const existingItem = cart.find(item => item.id === productId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: productId,
+                            name: productName,
+                            price: productPrice,
+                            image: productImage,
+                            quantity: 1
+                        });
+                    }
+                    
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    
+                    // Уведомление
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.textContent = `${productName} добавлен в корзину`;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => notification.classList.add('show'), 10);
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                        setTimeout(() => document.body.removeChild(notification), 300);
+                    }, 2000);
+                });
+            }
+            
+            // Переключение изображений
             document.querySelectorAll('.thumbnail').forEach(thumb => {
                 thumb.addEventListener('click', function() {
                     document.querySelector('.main-image').src = this.src;
                     document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                 });
+            });
+            
+            // Подсветка активной страницы
+            const currentPage = location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('href') === currentPage || 
+                    (currentPage === '' && link.getAttribute('href') === 'index.html')) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>
