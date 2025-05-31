@@ -85,39 +85,3 @@ document.addEventListener('click', function(e) {
         console.log('Add to cart button clicked');
     }
 });
-/* Стили для уведомления */
-.notification {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #6d6875;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    font-size: 16px;
-    max-width: 80%;
-    text-align: center;
-    pointer-events: none;
-}
-
-.notification.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-10px);
-}
-
-/* Анимация для иконки корзины */
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-10px);}
-    60% {transform: translateY(-5px);}
-}
-
-.cart-link:hover .cart-icon,
-.add-to-cart-clicked {
-    animation: bounce 0.8s;
-}
