@@ -4,20 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Лавандовое мыло | Мыльная фантазия</title>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <div class="container">
-            <div class="logo">Мыльная фантазия</div>
-            <nav>
-                <ul>
-                    <li><a href="../../index.html">Главная</a></li>
-                    <li><a href="../all.html">Все товары</a></li>
-                    <li><a href="../../cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
-                    <li><a href="../../orders.html">Мои заказы</a></li>
-                </ul>
-            </nav>
+            <div class="header-content">
+                <div class="logo">
+                    <a href="../../../index.html">Мыльная фантазия</a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="../../../index.html">Главная</a></li>
+                        <li><a href="../all.html">Все товары</a></li>
+                        <li class="cart-link">
+                            <a href="../../../cart.html">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                </svg>
+                                Корзина (<span class="cart-count">0</span>)
+                            </a>
+                        </li>
+                        <li><a href="../../../orders.html">Мои заказы</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -38,17 +57,19 @@
                         ★★★★★ <span class="reviews">(24 отзыва)</span>
                     </div>
                     <div class="description">
-                        <p>Наше лавандовое мыло создано для тех, кто ценит натуральные продукты и заботится о своей коже. Мыло обладает нежным ароматом лаванды, который помогает расслабиться после тяжелого дня.</p>
+                        <p>Натуральное мыло с лавандой для глубокого очищения и релаксации. Идеально подходит для вечернего умывания и снятия стресса.</p>
                         <h3>Преимущества:</h3>
                         <ul>
-                            <li>Успокаивает раздраженную кожу</li>
-                            <li>Снимает напряжение и стресс</li>
-                            <li>Натуральный состав без химических добавок</li>
+                            <li>Успокаивает кожу и снимает раздражение</li>
+                            <li>Антисептические и противовоспалительные свойства</li>
+                            <li>Нежный аромат, способствующий расслаблению</li>
                             <li>Подходит для всех типов кожи</li>
-                            <li>Экологичная упаковка</li>
+                            <li>100% натуральный состав</li>
                         </ul>
                         <h3>Состав:</h3>
-                        <p>Оливковое масло, кокосовое масло, масло ши, эфирное масло лаванды, дистиллированная вода, щелочь.</p>
+                        <p>Оливковое масло, кокосовое масло, масло ши, эфирное масло лаванды, дистиллированная вода, щелочь, лепестки лаванды.</p>
+                        <h3>Рекомендации:</h3>
+                        <p>Используйте для умывания утром и вечером. Особенно рекомендуется перед сном для снятия напряжения.</p>
                     </div>
                     <button class="btn add-to-cart" data-id="1" data-name="Лавандовое мыло" data-price="350" data-image="https://i.imgur.com/KZJ8zNq.jpg">Добавить в корзину</button>
                 </div>
@@ -57,14 +78,14 @@
             <div class="reviews-section">
                 <h2>Отзывы</h2>
                 <div class="review">
-                    <div class="review-author">Анна</div>
+                    <div class="review-author">Анна, Москва</div>
                     <div class="review-rating">★★★★★</div>
-                    <div class="review-text">Обожаю это мыло! Аромат просто волшебный, кожа после него нежная и увлажненная.</div>
+                    <div class="review-text">Люблю это мыло за нежный аромат! Кожа после него мягкая и увлажненная, не стягивает.</div>
                 </div>
                 <div class="review">
-                    <div class="review-author">Ирина</div>
+                    <div class="review-author">Ирина, Санкт-Петербург</div>
                     <div class="review-rating">★★★★☆</div>
-                    <div class="review-text">Очень приятное мыло, но хотелось бы более насыщенный аромат лаванды.</div>
+                    <div class="review-text">Хорошее мыло, но хотелось бы более насыщенный аромат лаванды.</div>
                 </div>
             </div>
         </div>
@@ -95,23 +116,84 @@
         </div>
     </footer>
 
-    <script src="../../script.js"></script>
+    <script src="../../../script.js"></script>
     <script>
-        // Обновление счетчика корзины при загрузке
         document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mainNav = document.querySelector('.main-nav');
+            
+            if (mobileMenuBtn && mainNav) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    mainNav.classList.toggle('active');
+                });
+            }
+            
+            // Cart count update
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const count = cart.reduce((total, item) => total + item.quantity, 0);
             document.querySelectorAll('.cart-count').forEach(el => {
                 el.textContent = count;
             });
             
-            // Просмотр миниатюр
+            // Thumbnail click handler
             document.querySelectorAll('.thumbnail').forEach(thumb => {
                 thumb.addEventListener('click', function() {
                     document.querySelector('.main-image').src = this.src;
                     document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                 });
+            });
+            
+            // Add to cart button
+            document.querySelector('.add-to-cart').addEventListener('click', function() {
+                const productId = parseInt(this.dataset.id);
+                const name = this.dataset.name;
+                const price = parseFloat(this.dataset.price);
+                const image = this.dataset.image;
+                
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: productId,
+                        name: name,
+                        price: price,
+                        image: image,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // Update cart count
+                const newCount = cart.reduce((total, item) => total + item.quantity, 0);
+                document.querySelectorAll('.cart-count').forEach(el => {
+                    el.textContent = newCount;
+                });
+                
+                // Show notification
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.innerHTML = `
+                    <span>${name} добавлен в корзину</span>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 2000);
             });
         });
     </script>
