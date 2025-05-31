@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все товары | Мыльная фантазия</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Мыльная фантазия</div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Главная</a></li>
+                    <li><a href="all.html" class="active">Все товары</a></li>
+                    <li><a href="../cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Все товары</h1>
+            <div class="products-grid" id="products-container">
+                <div class="product-card" data-id="1">
+                    <div class="product-image">
+                        <img src="https://i.imgur.com/KZJ8zNq.jpg" alt="Лавандовое мыло">
+                    </div>
+                    <div class="product-info">
+                        <h3>Лавандовое мыло</h3>
+                        <p>Успокаивающее мыло с натуральной лавандой</p>
+                        <div class="product-price">350 ₽</div>
+                        <button class="btn add-to-cart">В корзину</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-id="2">
+                    <div class="product-image">
+                        <img src="https://i.imgur.com/7Q5W6lF.jpg" alt="Антибактериальное мыло">
+                    </div>
+                    <div class="product-info">
+                        <h3>Антибактериальное мыло</h3>
+                        <p>С маслом чайного дерева</p>
+                        <div class="product-price">420 ₽</div>
+                        <button class="btn add-to-cart">В корзину</button>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-id="3">
+                    <div class="product-image">
+                        <img src="https://i.imgur.com/9p3R5vM.jpg" alt="Медовое мыло">
+                    </div>
+                    <div class="product-info">
+                        <h3>Медовое мыло</h3>
+                        <p>Питательное мыло с натуральным медом</p>
+                        <div class="product-price">380 ₽</div>
+                        <button class="btn add-to-cart">В корзину</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2023 Мыльная фантазия</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
