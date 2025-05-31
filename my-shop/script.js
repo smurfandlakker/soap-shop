@@ -27,23 +27,55 @@ function addToCart(productId, name, price, image) {
     
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    alert('Товар добавлен в корзину');
+    
+    // Создаем и показываем уведомление
+    const notification = document.createElement('div');
+    notification.className = 'cart-notification';
+    notification.textContent = `${name} добавлен в корзину`;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 2000);
 }
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     updateCartCount();
     
-    // Обработчики для кнопок "В корзину"
+    // Обработчики для кнопок "В корзину" - делегирование событий
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('add-to-cart')) {
             const productCard = e.target.closest('.product-card');
+            if (!productCard) return;
+            
             const productId = parseInt(productCard.dataset.id);
             const name = productCard.querySelector('h3').textContent;
-            const price = parseFloat(productCard.querySelector('.product-price').textContent);
+            const priceText = productCard.querySelector('.product-price').textContent;
+            const price = parseFloat(priceText.replace(/[^\d.]/g, ''));
             const image = productCard.querySelector('img').src;
             
             addToCart(productId, name, price, image);
         }
     });
 });
+
+// Для страницы детализации товара
+if (document.querySelector('.product-detail .add-to-cart')) {
+    document.querySelector('.product-detail .add-to-cart').addEventListener('click', function() {
+        const productId = parseInt(this.dataset.id);
+        const name = document.querySelector('.product-detail h1').textContent;
+        const priceText = document.querySelector('.product-detail .price').textContent;
+        const price = parseFloat(priceText.replace(/[^\d.]/g, ''));
+        const image = document.querySelector('.product-detail .main-image').src;
+        
+        addToCart(productId, name, price, image);
+    });
+}
