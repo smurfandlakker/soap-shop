@@ -15,6 +15,7 @@
                     <li><a href="index.html">Главная</a></li>
                     <li><a href="products/all.html">Товары</a></li>
                     <li><a href="cart.html" class="active">Корзина (<span class="cart-count">0</span>)</a></li>
+                    <li><a href="orders.html">Мои заказы</a></li>
                 </ul>
             </nav>
         </div>
@@ -26,15 +27,61 @@
             <div id="cart-items">
                 <!-- Товары будут добавлены через JS -->
             </div>
-            <div id="cart-total" style="margin-top: 20px; font-weight: bold;">
+            <div id="cart-total" class="cart-total">
                 <!-- Итоговая сумма -->
+            </div>
+            
+            <div class="checkout-form" id="checkout-form">
+                <h2>Оформление заказа</h2>
+                <form id="order-form">
+                    <div class="form-group">
+                        <label for="name">ФИО:</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон:</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Адрес доставки:</label>
+                        <textarea id="address" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">Комментарий к заказу:</label>
+                        <textarea id="comment"></textarea>
+                    </div>
+                    <button type="submit" class="btn checkout-btn">Оформить заказ</button>
+                </form>
             </div>
         </div>
     </main>
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2023 Мыльная фантазия</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Email: info@soapfantasy.ru</p>
+                    <p>Телефон: +7 (123) 456-78-90</p>
+                </div>
+                <div class="footer-section">
+                    <h3>О нас</h3>
+                    <p>Натуральное мыло ручной работы с любовью</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Соцсети</h3>
+                    <div class="social-links">
+                        <a href="#">Instagram</a>
+                        <a href="#">VK</a>
+                        <a href="#">Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2023 Мыльная фантазия. Все права защищены.</p>
         </div>
     </footer>
 
@@ -44,32 +91,141 @@
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartItems = document.getElementById('cart-items');
             const cartTotal = document.getElementById('cart-total');
+            const orderForm = document.getElementById('order-form');
             
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p>Ваша корзина пуста</p>';
-                cartTotal.textContent = '';
-                return;
+            function renderCart() {
+                if (cart.length === 0) {
+                    cartItems.innerHTML = '<div class="empty-cart"><p>Ваша корзина пуста</p><a href="products/all.html" class="btn">Перейти к товарам</a></div>';
+                    cartTotal.textContent = '';
+                    document.getElementById('checkout-form').style.display = 'none';
+                    return;
+                }
+                
+                let total = 0;
+                cartItems.innerHTML = cart.map(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    return `
+                        <div class="cart-item">
+                            <div class="cart-item-image">
+                                <img src="${item.image}" alt="${item.name}">
+                            </div>
+                            <div class="cart-item-info">
+                                <h3>${item.name}</h3>
+                                <div class="cart-item-price">${item.price} ₽ × ${item.quantity} = ${itemTotal} ₽</div>
+                                <div class="cart-item-actions">
+                                    <button class="btn-quantity minus" data-id="${item.id}">-</button>
+                                    <span class="quantity">${item.quantity}</span>
+                                    <button class="btn-quantity plus" data-id="${item.id}">+</button>
+                                    <button class="btn-remove" data-id="${item.id}">Удалить</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                cartTotal.innerHTML = `
+                    <div class="total-sum">Итого: <span>${total} ₽</span></div>
+                    <button class="btn clear-cart">Очистить корзину</button>
+                `;
+                
+                // Добавляем обработчики для кнопок
+                document.querySelectorAll('.minus').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        const item = cart.find(i => i.id === id);
+                        if (item.quantity > 1) {
+                            item.quantity--;
+                        } else {
+                            cart.splice(cart.indexOf(item), 1);
+                        }
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        renderCart();
+                        updateCartCount();
+                    });
+                });
+                
+                document.querySelectorAll('.plus').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        const item = cart.find(i => i.id === id);
+                        item.quantity++;
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        renderCart();
+                        updateCartCount();
+                    });
+                });
+                
+                document.querySelectorAll('.btn-remove').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        const itemIndex = cart.findIndex(i => i.id === id);
+                        cart.splice(itemIndex, 1);
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        renderCart();
+                        updateCartCount();
+                    });
+                });
+                
+                if (document.querySelector('.clear-cart')) {
+                    document.querySelector('.clear-cart').addEventListener('click', function() {
+                        localStorage.removeItem('cart');
+                        cart.length = 0;
+                        renderCart();
+                        updateCartCount();
+                    });
+                }
             }
             
-            let total = 0;
-            cartItems.innerHTML = cart.map(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                
-                return `
-                    <div class="cart-item" style="display: flex; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
-                        <div style="width: 80px; margin-right: 15px;">
-                            <img src="${item.image}" alt="${item.name}" style="width: 100%;">
-                        </div>
-                        <div style="flex-grow: 1;">
-                            <h3>${item.name}</h3>
-                            <p>${item.price} ₽ × ${item.quantity} = ${itemTotal} ₽</p>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            // Оформление заказа
+            if (orderForm) {
+                orderForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    if (cart.length === 0) {
+                        alert('Ваша корзина пуста!');
+                        return;
+                    }
+                    
+                    const order = {
+                        id: Date.now(),
+                        date: new Date().toLocaleString(),
+                        customer: {
+                            name: document.getElementById('name').value,
+                            email: document.getElementById('email').value,
+                            phone: document.getElementById('phone').value,
+                            address: document.getElementById('address').value,
+                            comment: document.getElementById('comment').value
+                        },
+                        items: [...cart],
+                        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                        status: 'В обработке'
+                    };
+                    
+                    // Сохраняем заказ
+                    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+                    orders.push(order);
+                    localStorage.setItem('orders', JSON.stringify(orders));
+                    
+                    // Очищаем корзину
+                    localStorage.removeItem('cart');
+                    cart.length = 0;
+                    updateCartCount();
+                    
+                    // Перенаправляем на страницу заказа
+                    window.location.href = `order.html?id=${order.id}`;
+                });
+            }
             
-            cartTotal.textContent = `Итого: ${total} ₽`;
+            function updateCartCount() {
+                const count = cart.reduce((total, item) => total + item.quantity, 0);
+                document.querySelectorAll('.cart-count').forEach(el => {
+                    el.textContent = count;
+                });
+            }
+            
+            renderCart();
         });
     </script>
 </body>
