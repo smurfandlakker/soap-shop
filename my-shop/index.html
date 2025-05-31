@@ -124,28 +124,52 @@
 
         /* Стили для героя */
         .hero {
-            background: linear-gradient(rgba(109, 104, 117, 0.8), rgba(181, 131, 141, 0.8)), 
-                        url('https://i.imgur.com/JWbQE0O.jpg') no-repeat center center;
-            background-size: cover;
+            background: linear-gradient(135deg, rgba(109, 104, 117, 0.9) 0%, rgba(181, 131, 141, 0.9) 100%);
             color: white;
-            padding: 100px 0;
+            padding: 120px 0;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            background-size: cover;
+            opacity: 0.2;
         }
 
         .hero h1 {
             font-size: 48px;
             margin-bottom: 20px;
+            position: relative;
         }
 
         .hero p {
             font-size: 20px;
             margin-bottom: 30px;
+            position: relative;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Стили для преимуществ */
         .benefits {
-            padding: 60px 0;
+            padding: 80px 0;
             background-color: #f9f5f6;
+        }
+
+        .benefits h2 {
+            text-align: center;
+            color: #6d6875;
+            margin-bottom: 40px;
+            font-size: 32px;
         }
 
         .benefits-grid {
@@ -157,25 +181,40 @@
 
         .benefit-card {
             background: white;
-            padding: 30px;
+            padding: 40px 30px;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             text-align: center;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .benefit-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
 
         .benefit-icon {
             font-size: 48px;
             margin-bottom: 20px;
+            color: #b5838d;
+        }
+
+        .benefit-card h3 {
+            color: #6d6875;
+            margin-bottom: 15px;
+            font-size: 20px;
         }
 
         /* Стили для популярных товаров */
         .popular-products {
-            padding: 60px 0;
+            padding: 80px 0;
+        }
+
+        .popular-products h2 {
+            text-align: center;
+            color: #6d6875;
+            margin-bottom: 40px;
+            font-size: 32px;
         }
 
         .products-grid {
@@ -201,6 +240,10 @@
         .product-image {
             height: 250px;
             overflow: hidden;
+            background-color: #f0e6ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .product-image img {
@@ -255,7 +298,7 @@
 
         /* Стили для раздела "О нас" */
         .about {
-            padding: 60px 0;
+            padding: 80px 0;
             background-color: #f9f5f6;
         }
 
@@ -269,17 +312,31 @@
             flex: 1;
         }
 
+        .about-text h2 {
+            color: #6d6875;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
         .about-image {
             flex: 1;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
+            background: linear-gradient(135deg, #6d6875 0%, #b5838d 100%);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
         }
 
         /* Кнопки */
@@ -299,6 +356,7 @@
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0.95;
         }
 
         .secondary-btn {
@@ -320,18 +378,18 @@
         .site-footer {
             background: linear-gradient(135deg, #6d6875 0%, #b5838d 100%);
             color: white;
-            padding: 40px 0 20px;
+            padding: 60px 0 20px;
         }
 
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
         .footer-section h3 {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 20px;
             position: relative;
             padding-bottom: 10px;
@@ -405,6 +463,10 @@
                 padding: 8px 12px;
             }
 
+            .hero {
+                padding: 80px 0;
+            }
+
             .hero h1 {
                 font-size: 36px;
             }
@@ -415,6 +477,12 @@
 
             .about-content {
                 flex-direction: column;
+            }
+
+            .about-image {
+                order: -1;
+                height: 300px;
+                margin-bottom: 30px;
             }
 
             .products-grid {
@@ -451,7 +519,7 @@
         <section class="hero">
             <div class="container">
                 <h1>Натуральное мыло ручной работы</h1>
-                <p>Экологичные продукты для вашей кожи</p>
+                <p>Экологичные продукты для вашей кожи с любовью и заботой</p>
                 <a href="products/all.html" class="btn">Смотреть товары</a>
             </div>
         </section>
@@ -541,7 +609,7 @@
                         <a href="#" class="btn secondary-btn">Подробнее о нас</a>
                     </div>
                     <div class="about-image">
-                        <img src="https://i.imgur.com/JWbQE0O.jpg" alt="Наша мастерская">
+                        Мыльная мастерская
                     </div>
                 </div>
             </div>
