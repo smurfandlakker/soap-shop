@@ -79,3 +79,9 @@ if (document.querySelector('.product-detail .add-to-cart')) {
         addToCart(productId, name, price, image);
     });
 }
+document.addEventListener('click', function(e) {
+    console.log('Clicked element:', e.target);
+    if (e.target.classList.contains('add-to-cart')) {
+        console.log('Add to cart button clicked');
+    }
+});
