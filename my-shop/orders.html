@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заказ | Мыльная фантазия</title>
+    <title>Мои заказы | Мыльная фантазия</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
                     <li><a href="index.html">Главная</a></li>
                     <li><a href="products/all.html">Товары</a></li>
                     <li><a href="cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
-                    <li><a href="orders.html">Мои заказы</a></li>
+                    <li><a href="orders.html" class="active">Мои заказы</a></li>
                 </ul>
             </nav>
         </div>
@@ -23,44 +23,19 @@
 
     <main>
         <div class="container">
-            <div class="order-confirmation">
-                <div class="confirmation-header">
-                    <h1>Спасибо за ваш заказ!</h1>
-                    <div class="order-id">Номер заказа: #<span id="order-id"></span></div>
-                </div>
-                
-                <div class="order-summary">
-                    <h2>Информация о заказе</h2>
-                    <div class="order-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Дата:</span>
-                            <span class="detail-value" id="order-date"></span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Статус:</span>
-                            <span class="detail-value" id="order-status"></span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Сумма:</span>
-                            <span class="detail-value" id="order-total"></span>
-                        </div>
-                    </div>
-                    
-                    <h3>Состав заказа</h3>
-                    <div id="order-items">
-                        <!-- Товары будут добавлены через JS -->
-                    </div>
-                    
-                    <h3>Информация о доставке</h3>
-                    <div class="customer-info" id="customer-info">
-                        <!-- Информация о покупателе -->
-                    </div>
-                </div>
-                
-                <div class="order-actions">
-                    <a href="products/all.html" class="btn">Продолжить покупки</a>
-                    <a href="orders.html" class="btn secondary-btn">Мои заказы</a>
-                </div>
+            <h1>Мои заказы</h1>
+            
+            <div class="order-search">
+                <h2>Найти заказ</h2>
+                <p>Введите email, который вы указали при оформлении заказа:</p>
+                <form id="search-order-form">
+                    <input type="email" id="search-email" placeholder="Ваш email" required>
+                    <button type="submit" class="btn">Найти заказы</button>
+                </form>
+            </div>
+            
+            <div id="order-results">
+                <!-- Результаты поиска будут здесь -->
             </div>
         </div>
     </main>
@@ -90,77 +65,65 @@
         </div>
     </footer>
 
+    <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Получаем ID заказа из URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('id');
-            
-            if (!orderId) {
-                window.location.href = 'orders.html';
-                return;
-            }
-            
-            // Находим заказ в localStorage
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            const order = orders.find(o => o.id == orderId);
-            
-            if (!order) {
-                window.location.href = 'orders.html';
-                return;
-            }
-            
-            // Заполняем информацию о заказе
-            document.getElementById('order-id').textContent = order.id;
-            document.getElementById('order-date').textContent = order.date;
-            document.getElementById('order-status').textContent = order.status;
-            document.getElementById('order-total').textContent = `${order.total} ₽`;
-            
-            // Заполняем товары
-            const itemsContainer = document.getElementById('order-items');
-            itemsContainer.innerHTML = order.items.map(item => `
-                <div class="order-item">
-                    <div class="item-image">
-                        <img src="${item.image}" alt="${item.name}">
-                    </div>
-                    <div class="item-info">
-                        <h4>${item.name}</h4>
-                        <div class="item-price">${item.price} ₽ × ${item.quantity} = ${item.price * item.quantity} ₽</div>
-                    </div>
-                </div>
-            `).join('');
-            
-            // Заполняем информацию о покупателе
-            document.getElementById('customer-info').innerHTML = `
-                <div class="detail-row">
-                    <span class="detail-label">ФИО:</span>
-                    <span class="detail-value">${order.customer.name}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Email:</span>
-                    <span class="detail-value">${order.customer.email}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Телефон:</span>
-                    <span class="detail-value">${order.customer.phone}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label">Адрес:</span>
-                    <span class="detail-value">${order.customer.address}</span>
-                </div>
-                ${order.customer.comment ? `
-                <div class="detail-row">
-                    <span class="detail-label">Комментарий:</span>
-                    <span class="detail-value">${order.customer.comment}</span>
-                </div>
-                ` : ''}
-            `;
-            
             // Обновляем счетчик корзины
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const count = cart.reduce((total, item) => total + item.quantity, 0);
             document.querySelectorAll('.cart-count').forEach(el => {
                 el.textContent = count;
+            });
+            
+            // Поиск заказов
+            document.getElementById('search-order-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('search-email').value.trim().toLowerCase();
+                const orders = JSON.parse(localStorage.getItem('orders')) || [];
+                const customerOrders = orders.filter(order => 
+                    order.customer.email.toLowerCase() === email
+                );
+                
+                const resultsContainer = document.getElementById('order-results');
+                
+                if (customerOrders.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="no-orders">
+                            <p>Заказы не найдены. Пожалуйста, проверьте правильность email.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                resultsContainer.innerHTML = `
+                    <h2>Ваши заказы</h2>
+                    <div class="orders-list">
+                        ${customerOrders.map(order => `
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <div class="order-id">Заказ #${order.id}</div>
+                                    <div class="order-date">${order.date}</div>
+                                    <div class="order-status ${order.status === 'Выполнен' ? 'completed' : ''}">${order.status}</div>
+                                </div>
+                                <div class="order-items">
+                                    ${order.items.map(item => `
+                                        <div class="order-item">
+                                            <img src="${item.image}" alt="${item.name}">
+                                            <div class="order-item-info">
+                                                <div>${item.name}</div>
+                                                <div>${item.quantity} × ${item.price} ₽</div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="order-total">
+                                    Итого: ${order.total} ₽
+                                </div>
+                                <a href="order.html?id=${order.id}" class="btn order-details-btn">Подробнее</a>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
             });
         });
     </script>
