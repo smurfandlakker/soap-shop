@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина | Мыльная фантазия</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -21,13 +22,15 @@
         </div>
     </header>
 
-    <main>
+    <main class="cart-page">
         <div class="container">
             <h1>Ваша корзина</h1>
-            <div id="cart-items">
+            
+            <div id="cart-items" class="cart-items">
                 <!-- Товары будут добавлены через JS -->
             </div>
-            <div id="cart-total" class="cart-total">
+            
+            <div id="cart-total" class="cart-summary">
                 <!-- Итоговая сумма -->
             </div>
             
@@ -36,25 +39,25 @@
                 <form id="order-form">
                     <div class="form-group">
                         <label for="name">ФИО:</label>
-                        <input type="text" id="name" required>
+                        <input type="text" id="name" required placeholder="Иванов Иван Иванович">
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" id="email" required>
+                        <input type="email" id="email" required placeholder="example@mail.ru">
                     </div>
                     <div class="form-group">
                         <label for="phone">Телефон:</label>
-                        <input type="tel" id="phone" required>
+                        <input type="tel" id="phone" required placeholder="+7 (999) 123-45-67">
                     </div>
                     <div class="form-group">
                         <label for="address">Адрес доставки:</label>
-                        <textarea id="address" required></textarea>
+                        <textarea id="address" required placeholder="Город, улица, дом, квартира"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="comment">Комментарий к заказу:</label>
-                        <textarea id="comment"></textarea>
+                        <textarea id="comment" placeholder="Особые пожелания"></textarea>
                     </div>
-                    <button type="submit" class="btn checkout-btn">Оформить заказ</button>
+                    <button type="submit" class="checkout-btn">Оформить заказ</button>
                 </form>
             </div>
         </div>
@@ -67,10 +70,14 @@
                     <h3>Контакты</h3>
                     <p>Email: info@soapfantasy.ru</p>
                     <p>Телефон: +7 (123) 456-78-90</p>
+                    <p>Адрес: г. Москва, ул. Мыльная, д. 1</p>
                 </div>
                 <div class="footer-section">
-                    <h3>О нас</h3>
-                    <p>Натуральное мыло ручной работы с любовью</p>
+                    <h3>Меню</h3>
+                    <a href="index.html">Главная</a>
+                    <a href="products/all.html">Товары</a>
+                    <a href="cart.html">Корзина</a>
+                    <a href="orders.html">Мои заказы</a>
                 </div>
                 <div class="footer-section">
                     <h3>Соцсети</h3>
@@ -91,12 +98,16 @@
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const cartItems = document.getElementById('cart-items');
             const cartTotal = document.getElementById('cart-total');
-            const orderForm = document.getElementById('order-form');
             
             function renderCart() {
                 if (cart.length === 0) {
-                    cartItems.innerHTML = '<div class="empty-cart"><p>Ваша корзина пуста</p><a href="products/all.html" class="btn">Перейти к товарам</a></div>';
-                    cartTotal.textContent = '';
+                    cartItems.innerHTML = `
+                        <div class="empty-cart">
+                            <p>Ваша корзина пуста</p>
+                            <a href="products/all.html" class="btn">Перейти к товарам</a>
+                        </div>
+                    `;
+                    cartTotal.innerHTML = '';
                     document.getElementById('checkout-form').style.display = 'none';
                     return;
                 }
@@ -107,18 +118,20 @@
                     total += itemTotal;
                     
                     return `
-                        <div class="cart-item">
+                        <div class="cart-item" data-id="${item.id}">
                             <div class="cart-item-image">
                                 <img src="${item.image}" alt="${item.name}">
                             </div>
                             <div class="cart-item-info">
-                                <h3>${item.name}</h3>
+                                <h3 class="cart-item-title">${item.name}</h3>
                                 <div class="cart-item-price">${item.price} ₽ × ${item.quantity} = ${itemTotal} ₽</div>
                                 <div class="cart-item-actions">
-                                    <button class="btn-quantity minus" data-id="${item.id}">-</button>
-                                    <span class="quantity">${item.quantity}</span>
-                                    <button class="btn-quantity plus" data-id="${item.id}">+</button>
-                                    <button class="btn-remove" data-id="${item.id}">Удалить</button>
+                                    <div class="quantity-control">
+                                        <button class="quantity-btn minus">-</button>
+                                        <span class="quantity-value">${item.quantity}</span>
+                                        <button class="quantity-btn plus">+</button>
+                                    </div>
+                                    <button class="remove-btn">Удалить</button>
                                 </div>
                             </div>
                         </div>
@@ -126,20 +139,25 @@
                 }).join('');
                 
                 cartTotal.innerHTML = `
-                    <div class="total-sum">Итого: <span>${total} ₽</span></div>
-                    <button class="btn clear-cart">Очистить корзину</button>
+                    <div class="total-sum">
+                        <span>Итого:</span>
+                        <span>${total} ₽</span>
+                    </div>
+                    <button class="checkout-btn" id="clear-cart">Очистить корзину</button>
                 `;
                 
-                // Добавляем обработчики для кнопок
+                // Обработчики для кнопок
                 document.querySelectorAll('.minus').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
-                        const item = cart.find(i => i.id === id);
+                        const itemId = parseInt(this.closest('.cart-item').dataset.id);
+                        const item = cart.find(i => i.id === itemId);
+                        
                         if (item.quantity > 1) {
                             item.quantity--;
                         } else {
                             cart.splice(cart.indexOf(item), 1);
                         }
+                        
                         localStorage.setItem('cart', JSON.stringify(cart));
                         renderCart();
                         updateCartCount();
@@ -148,8 +166,8 @@
                 
                 document.querySelectorAll('.plus').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
-                        const item = cart.find(i => i.id === id);
+                        const itemId = parseInt(this.closest('.cart-item').dataset.id);
+                        const item = cart.find(i => i.id === itemId);
                         item.quantity++;
                         localStorage.setItem('cart', JSON.stringify(cart));
                         renderCart();
@@ -157,10 +175,10 @@
                     });
                 });
                 
-                document.querySelectorAll('.btn-remove').forEach(btn => {
+                document.querySelectorAll('.remove-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        const id = parseInt(this.dataset.id);
-                        const itemIndex = cart.findIndex(i => i.id === id);
+                        const itemId = parseInt(this.closest('.cart-item').dataset.id);
+                        const itemIndex = cart.findIndex(i => i.id === itemId);
                         cart.splice(itemIndex, 1);
                         localStorage.setItem('cart', JSON.stringify(cart));
                         renderCart();
@@ -168,8 +186,8 @@
                     });
                 });
                 
-                if (document.querySelector('.clear-cart')) {
-                    document.querySelector('.clear-cart').addEventListener('click', function() {
+                if (document.getElementById('clear-cart')) {
+                    document.getElementById('clear-cart').addEventListener('click', function() {
                         localStorage.removeItem('cart');
                         cart.length = 0;
                         renderCart();
@@ -179,6 +197,7 @@
             }
             
             // Оформление заказа
+            const orderForm = document.getElementById('order-form');
             if (orderForm) {
                 orderForm.addEventListener('submit', function(e) {
                     e.preventDefault();
@@ -196,7 +215,7 @@
                             email: document.getElementById('email').value,
                             phone: document.getElementById('phone').value,
                             address: document.getElementById('address').value,
-                            comment: document.getElementById('comment').value
+                            comment: document.getElementById('comment').value || 'Нет комментария'
                         },
                         items: [...cart],
                         total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
@@ -218,15 +237,16 @@
                 });
             }
             
-            function updateCartCount() {
-                const count = cart.reduce((total, item) => total + item.quantity, 0);
-                document.querySelectorAll('.cart-count').forEach(el => {
-                    el.textContent = count;
-                });
-            }
-            
             renderCart();
         });
+        
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = count;
+            });
+        }
     </script>
 </body>
 </html>
