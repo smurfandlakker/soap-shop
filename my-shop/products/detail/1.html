@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лавандовое мыло | Мыльная фантазия</title>
+    <link rel="stylesheet" href="../../../style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Мыльная фантазия</div>
+            <nav>
+                <ul>
+                    <li><a href="../../../index.html">Главная</a></li>
+                    <li><a href="../all.html">Все товары</a></li>
+                    <li><a href="../../../cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
+                    <li><a href="../../../orders.html">Мои заказы</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container product-detail">
+            <div class="product-detail-container">
+                <div class="product-images">
+                    <img src="https://i.imgur.com/KZJ8zNq.jpg" alt="Лавандовое мыло" class="main-image">
+                    <div class="thumbnail-container">
+                        <img src="https://i.imgur.com/KZJ8zNq.jpg" alt="Лавандовое мыло" class="thumbnail active">
+                        <img src="https://i.imgur.com/JWbQE0O.jpg" alt="Лавандовое мыло - упаковка" class="thumbnail">
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h1>Лавандовое мыло</h1>
+                    <div class="price">350 ₽</div>
+                    <div class="rating">
+                        ★★★★★ <span class="reviews">(24 отзыва)</span>
+                    </div>
+                    <div class="description">
+                        <p>Наше лавандовое мыло создано для тех, кто ценит натуральные продукты и заботится о своей коже. Мыло обладает нежным ароматом лаванды, который помогает расслабиться после тяжелого дня.</p>
+                        <h3>Преимущества:</h3>
+                        <ul>
+                            <li>Успокаивает раздраженную кожу</li>
+                            <li>Снимает напряжение и стресс</li>
+                            <li>Натуральный состав без химических добавок</li>
+                            <li>Подходит для всех типов кожи</li>
+                            <li>Экологичная упаковка</li>
+                        </ul>
+                        <h3>Состав:</h3>
+                        <p>Оливковое масло, кокосовое масло, масло ши, эфирное масло лаванды, дистиллированная вода, щелочь.</p>
+                    </div>
+                    <button class="btn add-to-cart" data-id="1" data-name="Лавандовое мыло" data-price="350" data-image="https://i.imgur.com/KZJ8zNq.jpg">Добавить в корзину</button>
+                </div>
+            </div>
+            
+            <div class="reviews-section">
+                <h2>Отзывы</h2>
+                <div class="review">
+                    <div class="review-author">Анна</div>
+                    <div class="review-rating">★★★★★</div>
+                    <div class="review-text">Обожаю это мыло! Аромат просто волшебный, кожа после него нежная и увлажненная.</div>
+                </div>
+                <div class="review">
+                    <div class="review-author">Ирина</div>
+                    <div class="review-rating">★★★★☆</div>
+                    <div class="review-text">Очень приятное мыло, но хотелось бы более насыщенный аромат лаванды.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Email: info@soapfantasy.ru</p>
+                    <p>Телефон: +7 (123) 456-78-90</p>
+                </div>
+                <div class="footer-section">
+                    <h3>О нас</h3>
+                    <p>Натуральное мыло ручной работы с любовью</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Соцсети</h3>
+                    <div class="social-links">
+                        <a href="#">Instagram</a>
+                        <a href="#">VK</a>
+                        <a href="#">Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2023 Мыльная фантазия. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="../../../script.js"></script>
+    <script>
+        // Обновление счетчика корзины при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = count;
+            });
+            
+            // Просмотр миниатюр
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    document.querySelector('.main-image').src = this.src;
+                    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
