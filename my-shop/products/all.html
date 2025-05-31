@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Все товары | Мыльная фантазия</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
     <header>
@@ -12,9 +12,10 @@
             <div class="logo">Мыльная фантазия</div>
             <nav>
                 <ul>
-                    <li><a href="../index.html">Главная</a></li>
+                    <li><a href="../../index.html">Главная</a></li>
                     <li><a href="all.html" class="active">Все товары</a></li>
-                    <li><a href="../cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
+                    <li><a href="../../cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
+                    <li><a href="../../orders.html">Мои заказы</a></li>
                 </ul>
             </nav>
         </div>
@@ -23,41 +24,99 @@
     <main>
         <div class="container">
             <h1>Все товары</h1>
+            
+            <div class="category-filter">
+                <button class="btn filter-btn active" data-category="all">Все товары</button>
+                <button class="btn filter-btn" data-category="regular">Обычное мыло</button>
+                <button class="btn filter-btn" data-category="antibacterial">Антибактериальное</button>
+            </div>
+            
             <div class="products-grid" id="products-container">
-                <div class="product-card" data-id="1">
-                    <div class="product-image">
-                        <img src="https://i.imgur.com/KZJ8zNq.jpg" alt="Лавандовое мыло">
-                    </div>
-                    <div class="product-info">
-                        <h3>Лавандовое мыло</h3>
-                        <p>Успокаивающее мыло с натуральной лавандой</p>
-                        <div class="product-price">350 ₽</div>
-                        <button class="btn add-to-cart">В корзину</button>
-                    </div>
+                <!-- Обычное мыло -->
+                <div class="product-card" data-id="1" data-category="regular">
+                    <a href="detail/1.html" class="product-link">
+                        <div class="product-image">
+                            <img src="https://i.imgur.com/KZJ8zNq.jpg" alt="Лавандовое мыло">
+                        </div>
+                        <div class="product-info">
+                            <h3>Лавандовое мыло</h3>
+                            <p>Успокаивающее мыло с натуральной лавандой</p>
+                            <div class="product-price">350 ₽</div>
+                        </div>
+                    </a>
+                    <button class="btn add-to-cart">В корзину</button>
                 </div>
                 
-                <div class="product-card" data-id="2">
-                    <div class="product-image">
-                        <img src="https://i.imgur.com/7Q5W6lF.jpg" alt="Антибактериальное мыло">
-                    </div>
-                    <div class="product-info">
-                        <h3>Антибактериальное мыло</h3>
-                        <p>С маслом чайного дерева</p>
-                        <div class="product-price">420 ₽</div>
-                        <button class="btn add-to-cart">В корзину</button>
-                    </div>
+                <!-- Антибактериальное мыло -->
+                <div class="product-card" data-id="2" data-category="antibacterial">
+                    <a href="detail/2.html" class="product-link">
+                        <div class="product-image">
+                            <img src="https://i.imgur.com/7Q5W6lF.jpg" alt="Антибактериальное мыло">
+                        </div>
+                        <div class="product-info">
+                            <h3>Антибактериальное мыло</h3>
+                            <p>С маслом чайного дерева</p>
+                            <div class="product-price">420 ₽</div>
+                        </div>
+                    </a>
+                    <button class="btn add-to-cart">В корзину</button>
                 </div>
                 
-                <div class="product-card" data-id="3">
-                    <div class="product-image">
-                        <img src="https://i.imgur.com/9p3R5vM.jpg" alt="Медовое мыло">
-                    </div>
-                    <div class="product-info">
-                        <h3>Медовое мыло</h3>
-                        <p>Питательное мыло с натуральным медом</p>
-                        <div class="product-price">380 ₽</div>
-                        <button class="btn add-to-cart">В корзину</button>
-                    </div>
+                <!-- Добавим еще товаров -->
+                <div class="product-card" data-id="3" data-category="regular">
+                    <a href="detail/3.html" class="product-link">
+                        <div class="product-image">
+                            <img src="https://i.imgur.com/9p3R5vM.jpg" alt="Медовое мыло">
+                        </div>
+                        <div class="product-info">
+                            <h3>Медовое мыло</h3>
+                            <p>Питательное мыло с натуральным медом</p>
+                            <div class="product-price">380 ₽</div>
+                        </div>
+                    </a>
+                    <button class="btn add-to-cart">В корзину</button>
+                </div>
+                
+                <div class="product-card" data-id="4" data-category="antibacterial">
+                    <a href="detail/4.html" class="product-link">
+                        <div class="product-image">
+                            <img src="https://i.imgur.com/JqYeARn.jpg" alt="Дегтярное мыло">
+                        </div>
+                        <div class="product-info">
+                            <h3>Дегтярное мыло</h3>
+                            <p>Антибактериальное мыло с березовым дегтем</p>
+                            <div class="product-price">400 ₽</div>
+                        </div>
+                    </a>
+                    <button class="btn add-to-cart">В корзину</button>
+                </div>
+                
+                <div class="product-card" data-id="5" data-category="regular">
+                    <a href="detail/5.html" class="product-link">
+                        <div class="product-image">
+                            <img src="https://i.imgur.com/mXjwQYh.jpg" alt="Кофейное мыло">
+                        </div>
+                        <div class="product-info">
+                            <h3>Кофейное мыло</h3>
+                            <p>Скрабирующее мыло с кофейной гущей</p>
+                            <div class="product-price">370 ₽</div>
+                        </div>
+                    </a>
+                    <button class="btn add-to-cart">В корзину</button>
+                </div>
+                
+                <div class="product-card" data-id="6" data-category="antibacterial">
+                    <a href="detail/6.html" class="product-link">
+                        <div class="product-image">
+                            <img src="https://i.imgur.com/vZ5vQzD.jpg" alt="Эвкалиптовое мыло">
+                        </div>
+                        <div class="product-info">
+                            <h3>Эвкалиптовое мыло</h3>
+                            <p>Освежающее мыло с эфирным маслом эвкалипта</p>
+                            <div class="product-price">450 ₽</div>
+                        </div>
+                    </a>
+                    <button class="btn add-to-cart">В корзину</button>
                 </div>
             </div>
         </div>
@@ -65,10 +124,47 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>&copy; 2023 Мыльная фантазия</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Email: info@soapfantasy.ru</p>
+                    <p>Телефон: +7 (123) 456-78-90</p>
+                </div>
+                <div class="footer-section">
+                    <h3>О нас</h3>
+                    <p>Натуральное мыло ручной работы с любовью</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Соцсети</h3>
+                    <div class="social-links">
+                        <a href="#">Instagram</a>
+                        <a href="#">VK</a>
+                        <a href="#">Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2023 Мыльная фантазия. Все права защищены.</p>
         </div>
     </footer>
 
-    <script src="../script.js"></script>
+    <script src="../../script.js"></script>
+    <script>
+        // Фильтрация по категориям
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                document.querySelectorAll('.product-card').forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
