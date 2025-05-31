@@ -6,19 +6,149 @@
     <title>Медовое мыло | Мыльная фантазия</title>
     <link rel="stylesheet" href="../../style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .header {
+            background: linear-gradient(135deg, #6d6875 0%, #b5838d 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            font-size: 28px;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-link {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+        .nav-link:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+        .nav-link.active {
+            color: white;
+            font-weight: 600;
+        }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ffcdb2;
+        }
+        .cart-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .cart-link:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .cart-icon {
+            font-size: 18px;
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #6d6875;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        .notification.show {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background: linear-gradient(135deg, #6d6875 0%, #b5838d 100%);
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 20px;
+                gap: 25px;
+                transition: left 0.3s ease;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .cart-link {
+                padding: 8px 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">Мыльная фантазия</div>
-            <nav>
-                <ul>
-                    <li><a href="../../index.html">Главная</a></li>
-                    <li><a href="../all.html">Все товары</a></li>
-                    <li><a href="../../cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
-                    <li><a href="../../orders.html">Мои заказы</a></li>
-                </ul>
+    <header class="header">
+        <div class="header-container">
+            <a href="../../index.html" class="logo">
+                <span class="logo-icon">🧼</span>
+                <span>Мыльная фантазия</span>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="../index.html" class="nav-link">Главная</a>
+                <a href="all.html" class="nav-link">Каталог</a>
+                <a href="../cart.html" class="nav-link cart-link">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="../orders.html" class="nav-link">Заказы</a>
             </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
     </header>
 
@@ -39,19 +169,19 @@
                         ★★★★★ <span class="reviews">(32 отзыва)</span>
                     </div>
                     <div class="description">
-                        <p>Питательное медовое мыло для мягкого ухода за кожей. Насыщает кожу полезными веществами и сохраняет ее естественную влагу.</p>
+                        <p>Питательное мыло с натуральным медом для мягкости и сияния кожи. Идеально подходит для сухой и чувствительной кожи.</p>
                         <h3>Преимущества:</h3>
                         <ul>
-                            <li>Интенсивное питание и увлажнение</li>
-                            <li>Антиоксидантные свойства меда</li>
-                            <li>Нежный сладковатый аромат</li>
-                            <li>Подходит для сухой и чувствительной кожи</li>
+                            <li>Глубоко питает и увлажняет кожу</li>
+                            <li>Смягчает и разглаживает кожу</li>
+                            <li>Натуральный антиоксидантный эффект</li>
+                            <li>Нежный медовый аромат</li>
                             <li>Создает защитный барьер на коже</li>
                         </ul>
                         <h3>Состав:</h3>
-                        <p>Оливковое масло, кокосовое масло, натуральный мед, масло ши, дистиллированная вода, щелочь.</p>
+                        <p>Оливковое масло, кокосовое масло, масло ши, натуральный мед, пчелиный воск, дистиллированная вода, щелочь.</p>
                         <h3>Рекомендации:</h3>
-                        <p>Идеально для зимнего периода, когда кожа особенно нуждается в дополнительном питании. Можно использовать как для рук, так и для всего тела.</p>
+                        <p>Используйте для ухода за сухой и обезвоженной кожей. Особенно рекомендуется в холодное время года для защиты кожи от пересушивания.</p>
                     </div>
                     <button class="btn add-to-cart" data-id="3" data-name="Медовое мыло" data-price="380" data-image="https://i.imgur.com/9p3R5vM.jpg">Добавить в корзину</button>
                 </div>
@@ -60,14 +190,14 @@
             <div class="reviews-section">
                 <h2>Отзывы</h2>
                 <div class="review">
-                    <div class="review-author">Елена, Сочи</div>
+                    <div class="review-author">Ольга, Екатеринбург</div>
                     <div class="review-rating">★★★★★</div>
-                    <div class="review-text">Спасение для моей сухой кожи! После использования кожа мягкая и увлажненная.</div>
+                    <div class="review-text">Лучшее мыло для моей сухой кожи! После него кожа мягкая и увлажненная, не стягивает.</div>
                 </div>
                 <div class="review">
-                    <div class="review-author">Дмитрий, Краснодар</div>
-                    <div class="review-rating">★★★★★</div>
-                    <div class="review-text">Приятный аромат и отличный уход за кожей. Пользуюсь уже полгода.</div>
+                    <div class="review-author">Александр, Краснодар</div>
+                    <div class="review-rating">★★★★☆</div>
+                    <div class="review-text">Очень приятный аромат и хороший уход за кожей. Единственное - мыло быстро размокает.</div>
                 </div>
             </div>
         </div>
@@ -98,14 +228,73 @@
         </div>
     </footer>
 
-    <script src="../../script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const count = cart.reduce((total, item) => total + item.quantity, 0);
-            document.querySelectorAll('.cart-count').forEach(el => {
-                el.textContent = count;
-            });
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    this.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                        mobileMenuBtn.textContent = '☰';
+                    });
+                });
+            }
+            
+            const updateCartCount = () => {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const count = cart.reduce((total, item) => total + item.quantity, 0);
+                document.querySelectorAll('.cart-count').forEach(el => {
+                    el.textContent = count;
+                });
+            };
+            updateCartCount();
+            
+            const addToCartBtn = document.querySelector('.add-to-cart');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    const productId = this.dataset.id;
+                    const productName = this.dataset.name;
+                    const productPrice = parseFloat(this.dataset.price);
+                    const productImage = this.dataset.image;
+                    
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const existingItem = cart.find(item => item.id === productId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: productId,
+                            name: productName,
+                            price: productPrice,
+                            image: productImage,
+                            quantity: 1
+                        });
+                    }
+                    
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.textContent = `${productName} добавлен в корзину`;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => notification.classList.add('show'), 10);
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                        setTimeout(() => document.body.removeChild(notification), 300);
+                    }, 2000);
+                });
+            }
             
             document.querySelectorAll('.thumbnail').forEach(thumb => {
                 thumb.addEventListener('click', function() {
@@ -113,6 +302,14 @@
                     document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                 });
+            });
+            
+            const currentPage = location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('href') === currentPage || 
+                    (currentPage === '' && link.getAttribute('href') === 'index.html')) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>
