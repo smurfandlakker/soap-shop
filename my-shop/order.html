@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ | Мыльная фантазия</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Мыльная фантазия</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="products/all.html">Товары</a></li>
+                    <li><a href="cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
+                    <li><a href="orders.html">Мои заказы</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="order-confirmation">
+                <div class="confirmation-header">
+                    <h1>Спасибо за ваш заказ!</h1>
+                    <div class="order-id">Номер заказа: #<span id="order-id"></span></div>
+                </div>
+                
+                <div class="order-summary">
+                    <h2>Информация о заказе</h2>
+                    <div class="order-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Дата:</span>
+                            <span class="detail-value" id="order-date"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Статус:</span>
+                            <span class="detail-value" id="order-status"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Сумма:</span>
+                            <span class="detail-value" id="order-total"></span>
+                        </div>
+                    </div>
+                    
+                    <h3>Состав заказа</h3>
+                    <div id="order-items">
+                        <!-- Товары будут добавлены через JS -->
+                    </div>
+                    
+                    <h3>Информация о доставке</h3>
+                    <div class="customer-info" id="customer-info">
+                        <!-- Информация о покупателе -->
+                    </div>
+                </div>
+                
+                <div class="order-actions">
+                    <a href="products/all.html" class="btn">Продолжить покупки</a>
+                    <a href="orders.html" class="btn secondary-btn">Мои заказы</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Email: info@soapfantasy.ru</p>
+                    <p>Телефон: +7 (123) 456-78-90</p>
+                </div>
+                <div class="footer-section">
+                    <h3>О нас</h3>
+                    <p>Натуральное мыло ручной работы с любовью</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Соцсети</h3>
+                    <div class="social-links">
+                        <a href="#">Instagram</a>
+                        <a href="#">VK</a>
+                        <a href="#">Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2023 Мыльная фантазия. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем ID заказа из URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            
+            if (!orderId) {
+                window.location.href = 'orders.html';
+                return;
+            }
+            
+            // Находим заказ в localStorage
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            const order = orders.find(o => o.id == orderId);
+            
+            if (!order) {
+                window.location.href = 'orders.html';
+                return;
+            }
+            
+            // Заполняем информацию о заказе
+            document.getElementById('order-id').textContent = order.id;
+            document.getElementById('order-date').textContent = order.date;
+            document.getElementById('order-status').textContent = order.status;
+            document.getElementById('order-total').textContent = `${order.total} ₽`;
+            
+            // Заполняем товары
+            const itemsContainer = document.getElementById('order-items');
+            itemsContainer.innerHTML = order.items.map(item => `
+                <div class="order-item">
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-info">
+                        <h4>${item.name}</h4>
+                        <div class="item-price">${item.price} ₽ × ${item.quantity} = ${item.price * item.quantity} ₽</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Заполняем информацию о покупателе
+            document.getElementById('customer-info').innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">ФИО:</span>
+                    <span class="detail-value">${order.customer.name}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value">${order.customer.email}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Телефон:</span>
+                    <span class="detail-value">${order.customer.phone}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Адрес:</span>
+                    <span class="detail-value">${order.customer.address}</span>
+                </div>
+                ${order.customer.comment ? `
+                <div class="detail-row">
+                    <span class="detail-label">Комментарий:</span>
+                    <span class="detail-value">${order.customer.comment}</span>
+                </div>
+                ` : ''}
+            `;
+            
+            // Обновляем счетчик корзины
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = count;
+            });
+        });
+    </script>
+</body>
+</html>
