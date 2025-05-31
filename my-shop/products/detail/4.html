@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дегтярное мыло | Мыльная фантазия</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Мыльная фантазия</div>
+            <nav>
+                <ul>
+                    <li><a href="../../index.html">Главная</a></li>
+                    <li><a href="../all.html">Все товары</a></li>
+                    <li><a href="../../cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
+                    <li><a href="../../orders.html">Мои заказы</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container product-detail">
+            <div class="product-detail-container">
+                <div class="product-images">
+                    <img src="https://i.imgur.com/JqYeARn.jpg" alt="Дегтярное мыло" class="main-image">
+                    <div class="thumbnail-container">
+                        <img src="https://i.imgur.com/JqYeARn.jpg" alt="Дегтярное мыло" class="thumbnail active">
+                        <img src="https://i.imgur.com/JWbQE0O.jpg" alt="Дегтярное мыло - упаковка" class="thumbnail">
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h1>Дегтярное мыло</h1>
+                    <div class="price">400 ₽</div>
+                    <div class="rating">
+                        ★★★★☆ <span class="reviews">(15 отзывов)</span>
+                    </div>
+                    <div class="description">
+                        <p>Натуральное дегтярное мыло с березовым дегтем для проблемной кожи. Проверенное средство для борьбы с воспалениями и раздражениями.</p>
+                        <h3>Преимущества:</h3>
+                        <ul>
+                            <li>Мощное антибактериальное и противовоспалительное действие</li>
+                            <li>Регулирует работу сальных желез</li>
+                            <li>Способствует заживлению мелких повреждений</li>
+                            <li>Подходит для жирной и проблемной кожи</li>
+                            <li>Натуральный состав без агрессивных химикатов</li>
+                        </ul>
+                        <h3>Состав:</h3>
+                        <p>Березовый деготь (10%), оливковое масло, кокосовое масло, касторовое масло, дистиллированная вода, щелочь.</p>
+                        <h3>Рекомендации:</h3>
+                        <p>Используйте 1-2 раза в день для умывания. Может слегка сушить кожу - рекомендуется последующее увлажнение.</p>
+                    </div>
+                    <button class="btn add-to-cart" data-id="4" data-name="Дегтярное мыло" data-price="400" data-image="https://i.imgur.com/JqYeARn.jpg">Добавить в корзину</button>
+                </div>
+            </div>
+            
+            <div class="reviews-section">
+                <h2>Отзывы</h2>
+                <div class="review">
+                    <div class="review-author">Александра, Ростов-на-Дону</div>
+                    <div class="review-rating">★★★★★</div>
+                    <div class="review-text">Спасло мою кожу от постоянных воспалений! Использую 2 месяца - результат потрясающий.</div>
+                </div>
+                <div class="review">
+                    <div class="review-author">Михаил, Самара</div>
+                    <div class="review-rating">★★★☆☆</div>
+                    <div class="review-text">Эффект есть, но запах очень специфический. Привыкнуть сложно.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <p>Email: info@soapfantasy.ru</p>
+                    <p>Телефон: +7 (123) 456-78-90</p>
+                </div>
+                <div class="footer-section">
+                    <h3>О нас</h3>
+                    <p>Натуральное мыло ручной работы с любовью</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Соцсети</h3>
+                    <div class="social-links">
+                        <a href="#">Instagram</a>
+                        <a href="#">VK</a>
+                        <a href="#">Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <p class="copyright">&copy; 2023 Мыльная фантазия. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.querySelectorAll('.cart-count').forEach(el => {
+                el.textContent = count;
+            });
+            
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    document.querySelector('.main-image').src = this.src;
+                    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
