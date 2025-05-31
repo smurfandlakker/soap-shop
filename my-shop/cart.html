@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина | Мыльная фантазия</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Мыльная фантазия</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="products/all.html">Товары</a></li>
+                    <li><a href="cart.html" class="active">Корзина (<span class="cart-count">0</span>)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Ваша корзина</h1>
+            <div id="cart-items">
+                <!-- Товары будут добавлены через JS -->
+            </div>
+            <div id="cart-total" style="margin-top: 20px; font-weight: bold;">
+                <!-- Итоговая сумма -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2023 Мыльная фантазия</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Ваша корзина пуста</p>';
+                cartTotal.textContent = '';
+                return;
+            }
+            
+            let total = 0;
+            cartItems.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                return `
+                    <div class="cart-item" style="display: flex; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+                        <div style="width: 80px; margin-right: 15px;">
+                            <img src="${item.image}" alt="${item.name}" style="width: 100%;">
+                        </div>
+                        <div style="flex-grow: 1;">
+                            <h3>${item.name}</h3>
+                            <p>${item.price} ₽ × ${item.quantity} = ${itemTotal} ₽</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            cartTotal.textContent = `Итого: ${total} ₽`;
+        });
+    </script>
+</body>
+</html>
