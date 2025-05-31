@@ -6,19 +6,149 @@
     <title>Дегтярное мыло | Мыльная фантазия</title>
     <link rel="stylesheet" href="../../style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .header {
+            background: linear-gradient(135deg, #6d6875 0%, #b5838d 100%);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            font-size: 28px;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-link {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+        .nav-link:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+        .nav-link.active {
+            color: white;
+            font-weight: 600;
+        }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ffcdb2;
+        }
+        .cart-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .cart-link:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .cart-icon {
+            font-size: 18px;
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #6d6875;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        .notification.show {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background: linear-gradient(135deg, #6d6875 0%, #b5838d 100%);
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 20px;
+                gap: 25px;
+                transition: left 0.3s ease;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .cart-link {
+                padding: 8px 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">Мыльная фантазия</div>
-            <nav>
-                <ul>
-                    <li><a href="../../index.html">Главная</a></li>
-                    <li><a href="../all.html">Все товары</a></li>
-                    <li><a href="../../cart.html">Корзина (<span class="cart-count">0</span>)</a></li>
-                    <li><a href="../../orders.html">Мои заказы</a></li>
-                </ul>
+    <header class="header">
+        <div class="header-container">
+            <a href="../../index.html" class="logo">
+                <span class="logo-icon">🧼</span>
+                <span>Мыльная фантазия</span>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="../index.html" class="nav-link">Главная</a>
+                <a href="all.html" class="nav-link">Каталог</a>
+                <a href="../cart.html" class="nav-link cart-link">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="../orders.html" class="nav-link">Заказы</a>
             </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
     </header>
 
@@ -26,10 +156,8 @@
         <div class="container product-detail">
             <div class="product-detail-container">
                 <div class="product-images">
-                    <img src="https://i.imgur.com/JqYeARn.jpg" alt="Дегтярное мыло" class="main-image">
                     <div class="thumbnail-container">
                         <img src="https://i.imgur.com/JqYeARn.jpg" alt="Дегтярное мыло" class="thumbnail active">
-                        <img src="https://i.imgur.com/JWbQE0O.jpg" alt="Дегтярное мыло - упаковка" class="thumbnail">
                     </div>
                 </div>
                 <div class="product-info">
@@ -39,19 +167,19 @@
                         ★★★★☆ <span class="reviews">(15 отзывов)</span>
                     </div>
                     <div class="description">
-                        <p>Натуральное дегтярное мыло с березовым дегтем для проблемной кожи. Проверенное средство для борьбы с воспалениями и раздражениями.</p>
+                        <p>Мощное очищающее мыло с березовым дегтем для проблемной кожи. Эффективно против воспалений и раздражений.</p>
                         <h3>Преимущества:</h3>
                         <ul>
-                            <li>Мощное антибактериальное и противовоспалительное действие</li>
+                            <li>Сильное антибактериальное и противовоспалительное действие</li>
+                            <li>Помогает при кожных заболеваниях (акне, экзема, псориаз)</li>
                             <li>Регулирует работу сальных желез</li>
-                            <li>Способствует заживлению мелких повреждений</li>
-                            <li>Подходит для жирной и проблемной кожи</li>
+                            <li>Ускоряет заживление ранок и воспалений</li>
                             <li>Натуральный состав без агрессивных химикатов</li>
                         </ul>
                         <h3>Состав:</h3>
-                        <p>Березовый деготь (10%), оливковое масло, кокосовое масло, касторовое масло, дистиллированная вода, щелочь.</p>
+                        <p>Березовый деготь, оливковое масло, кокосовое масло, касторовое масло, дистиллированная вода, щелочь.</p>
                         <h3>Рекомендации:</h3>
-                        <p>Используйте 1-2 раза в день для умывания. Может слегка сушить кожу - рекомендуется последующее увлажнение.</p>
+                        <p>Используйте для проблемных участков кожи 1-2 раза в день. Может сушить кожу, поэтому рекомендуется использовать увлажняющий крем после применения.</p>
                     </div>
                     <button class="btn add-to-cart" data-id="4" data-name="Дегтярное мыло" data-price="400" data-image="https://i.imgur.com/JqYeARn.jpg">Добавить в корзину</button>
                 </div>
@@ -60,14 +188,14 @@
             <div class="reviews-section">
                 <h2>Отзывы</h2>
                 <div class="review">
-                    <div class="review-author">Александра, Ростов-на-Дону</div>
+                    <div class="review-author">Мария, Уфа</div>
                     <div class="review-rating">★★★★★</div>
-                    <div class="review-text">Спасло мою кожу от постоянных воспалений! Использую 2 месяца - результат потрясающий.</div>
+                    <div class="review-text">Спасение для моей проблемной кожи! Прыщи стали появляться гораздо реже, воспаления проходят быстрее.</div>
                 </div>
                 <div class="review">
-                    <div class="review-author">Михаил, Самара</div>
+                    <div class="review-author">Артем, Самара</div>
                     <div class="review-rating">★★★☆☆</div>
-                    <div class="review-text">Эффект есть, но запах очень специфический. Привыкнуть сложно.</div>
+                    <div class="review-text">Эффективное, но запах очень специфический. Привыкнуть сложно, но результат того стоит.</div>
                 </div>
             </div>
         </div>
@@ -98,14 +226,73 @@
         </div>
     </footer>
 
-    <script src="../../script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const count = cart.reduce((total, item) => total + item.quantity, 0);
-            document.querySelectorAll('.cart-count').forEach(el => {
-                el.textContent = count;
-            });
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    this.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+                });
+                
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                        mobileMenuBtn.textContent = '☰';
+                    });
+                });
+            }
+            
+            const updateCartCount = () => {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const count = cart.reduce((total, item) => total + item.quantity, 0);
+                document.querySelectorAll('.cart-count').forEach(el => {
+                    el.textContent = count;
+                });
+            };
+            updateCartCount();
+            
+            const addToCartBtn = document.querySelector('.add-to-cart');
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    const productId = this.dataset.id;
+                    const productName = this.dataset.name;
+                    const productPrice = parseFloat(this.dataset.price);
+                    const productImage = this.dataset.image;
+                    
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const existingItem = cart.find(item => item.id === productId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: productId,
+                            name: productName,
+                            price: productPrice,
+                            image: productImage,
+                            quantity: 1
+                        });
+                    }
+                    
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.textContent = `${productName} добавлен в корзину`;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => notification.classList.add('show'), 10);
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                        setTimeout(() => document.body.removeChild(notification), 300);
+                    }, 2000);
+                });
+            }
             
             document.querySelectorAll('.thumbnail').forEach(thumb => {
                 thumb.addEventListener('click', function() {
@@ -113,6 +300,14 @@
                     document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
                 });
+            });
+            
+            const currentPage = location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('href') === currentPage || 
+                    (currentPage === '' && link.getAttribute('href') === 'index.html')) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>
