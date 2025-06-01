@@ -154,6 +154,9 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Делаем все карточки одинаковой высоты */
         }
 
         .product-card:hover {
@@ -183,6 +186,9 @@
 
         .product-info {
             padding: 20px;
+            flex: 1; /* Растягиваем блок с информацией */
+            display: flex;
+            flex-direction: column;
         }
 
         .product-info h3 {
@@ -195,6 +201,12 @@
             margin: 0 0 15px;
             color: #666;
             font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Ограничиваем текст 2 строками */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 40px; /* Фиксированная высота для 2 строк */
         }
 
         .product-price {
@@ -219,6 +231,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
+            margin-top: auto; /* Прижимаем кнопку к низу */
         }
 
         .add-to-cart:hover {
@@ -372,7 +385,7 @@
                         </div>
                         <div class="product-info">
                             <h3>Антибактериальное мыло</h3>
-                            <p>С маслом чайного дерева</p>
+                            <p>С маслом чайного дерева для защиты от бактерий и очищения кожи</p>
                             <div class="product-rating">★★★★★ (18)</div>
                             <div class="product-price">420 ₽</div>
                         </div>
@@ -387,7 +400,7 @@
                         </div>
                         <div class="product-info">
                             <h3>Медовое мыло</h3>
-                            <p>Питательное мыло с натуральным медом</p>
+                            <p>Питательное мыло с натуральным медом для мягкости и сияния кожи</p>
                             <div class="product-rating">★★★★★ (32)</div>
                             <div class="product-price">380 ₽</div>
                         </div>
@@ -402,7 +415,7 @@
                         </div>
                         <div class="product-info">
                             <h3>Дегтярное мыло</h3>
-                            <p>Для проблемной кожи с березовым дегтем</p>
+                            <p>Мощное очищающее мыло с березовым дегтем для проблемной кожи</p>
                             <div class="product-rating">★★★★☆ (15)</div>
                             <div class="product-price">400 ₽</div>
                         </div>
@@ -417,7 +430,7 @@
                         </div>
                         <div class="product-info">
                             <h3>Кофейное мыло</h3>
-                            <p>Скрабирующее мыло с кофейной гущей</p>
+                            <p>Скрабирующее мыло с кофейной гущей для мягкого пилинга и тонизирования кожи</p>
                             <div class="product-rating">★★★★★ (28)</div>
                             <div class="product-price">370 ₽</div>
                         </div>
@@ -432,7 +445,7 @@
                         </div>
                         <div class="product-info">
                             <h3>Эвкалиптовое мыло</h3>
-                            <p>Освежающее мыло с эфирным маслом эвкалипта</p>
+                            <p>Освежающее мыло с эфирным маслом эвкалипта для бодрости и очищения</p>
                             <div class="product-rating">★★★★☆ (21)</div>
                             <div class="product-price">450 ₽</div>
                         </div>
