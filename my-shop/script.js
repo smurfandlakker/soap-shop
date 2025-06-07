@@ -40,7 +40,7 @@ function handleAddToCart(event) {
         id: button.dataset.id,
         name: button.dataset.name,
         price: parseFloat(button.dataset.price),
-        image: button.dataset.image,
+        image: data-image,
         quantity: 1
     };
     
